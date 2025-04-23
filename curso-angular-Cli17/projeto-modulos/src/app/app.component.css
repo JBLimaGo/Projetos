@@ -1,0 +1,31 @@
+/* Estilo para a barra lateral */
+.sidebar {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: width 0.3s;
+  z-index: 1000; /* Certifique-se de que o menu fique acima do conteúdo */
+}
+
+/* Recolher a barra lateral em telas menores */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 60px; /* Largura reduzida */
+  }
+}
+
+/* Estilo para o conteúdo principal */
+.main-content {
+  margin-left: 250px;
+  transition: margin-left 0.3s;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 60px; /* Ajustar margem quando o menu está recolhido */
+  }
+}

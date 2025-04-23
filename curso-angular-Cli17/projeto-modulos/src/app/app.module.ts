@@ -4,10 +4,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CursoModule } from './curso/curso.module';
+import { GavetaNavComponent } from './gaveta-nav/gaveta-nav.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    GavetaNavComponent
   ],
   imports: [
     BrowserModule,

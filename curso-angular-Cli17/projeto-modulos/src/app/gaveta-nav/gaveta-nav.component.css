@@ -1,0 +1,15 @@
+/* Estilo para os links do menu lateral */
+.sidebar a {
+    display: block; /* Cada link ocupa uma linha */
+    padding: 10px 15px; /* Espaçamento interno */
+    text-decoration: none; /* Remove o sublinhado */
+    font-size: 18px; /* Tamanho da fonte */
+    color: white; /* Texto em branco */
+    background-color: #111; /* Fundo escuro */
+    transition: background-color 0.3s; /* Transição suave para hover */
+  }
+  
+  /* Estilo ao passar o mouse */
+  .sidebar a:hover {
+    background-color: #575757; /* Cor de fundo ao passar o mouse */
+  }
