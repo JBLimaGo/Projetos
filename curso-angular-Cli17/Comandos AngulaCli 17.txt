@@ -5,3 +5,41 @@ não era gerada automaticamente e o projeto vinha com uma outra estrutura,
 após pesquisar em alguns forúms, 
 oque resolveu para mim foi criar o projeto dessa 
 forma: ng new my-app --no-standalone --routing --ssr=false
+
+--------------------------------------------------------------------------------------------------
+
+Criação de Modulos @Ngmodule
+* Dentro do diretório do projeto
+ng g m nome-modulo
+
+---------------------------------------------------------------------------------------------------
+#### Angular do Meu notebook
+     _                      _                 ____ _     ___
+    / \   _ __   __ _ _   _| | __ _ _ __     / ___| |   |_ _|
+   / △ \ | '_ \ / _` | | | | |/ _` | '__|   | |   | |    | |
+  / ___ \| | | | (_| | |_| | | (_| | |      | |___| |___ | |
+ /_/   \_\_| |_|\__, |\__,_|_|\__,_|_|       \____|_____|___|
+                |___/
+
+
+Angular CLI: 17.3.16
+Node: 20.10.0
+Package Manager: npm 10.2.3
+OS: win32 x64
+
+Angular: 17.3.12
+... animations, common, compiler, compiler-cli, core, forms
+... platform-browser, platform-browser-dynamic, router
+
+Package                         Version
+---------------------------------------------------------
+@angular-devkit/architect       0.1703.16
+@angular-devkit/build-angular   17.3.16
+@angular-devkit/core            17.3.16
+@angular-devkit/schematics      17.3.16
+@angular/cli                    17.3.16
+@schematics/angular             17.3.16
+rxjs                            7.8.2
+typescript                      5.4.5
+zone.js                         0.14.10
+-------------------------------------------------------------------------------------------------
