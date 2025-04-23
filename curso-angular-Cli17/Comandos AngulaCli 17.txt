@@ -1,16 +1,3 @@
-Comandos 
-
-Sempre que tento criar um projeto angular essa pasta app.module.ts 
-não era gerada automaticamente e o projeto vinha com uma outra estrutura, 
-após pesquisar em alguns forúms, 
-oque resolveu para mim foi criar o projeto dessa 
-forma: ng new my-app --no-standalone --routing --ssr=false
-
---------------------------------------------------------------------------------------------------
-
-Criação de Modulos @Ngmodule
-* Dentro do diretório do projeto
-ng g m nome-modulo
 
 ---------------------------------------------------------------------------------------------------
 #### Angular do Meu notebook
@@ -43,3 +30,23 @@ rxjs                            7.8.2
 typescript                      5.4.5
 zone.js                         0.14.10
 -------------------------------------------------------------------------------------------------
+
+Comando de Criação de Projeto
+
+Sempre que tento criar um projeto angular essa pasta app.module.ts 
+não era gerada automaticamente e o projeto vinha com uma outra estrutura, 
+após pesquisar em alguns forúms, 
+oque resolveu para mim foi criar o projeto dessa 
+forma: ng new my-app --no-standalone --routing --ssr=false
+
+--------------------------------------------------------------------------------------------------
+
+Criação de Modulos @Ngmodule
+* Dentro do diretório do projeto
+ng g m nome-modulo
+
+---------------------------------------------------------------------------------------------------
+
+Criação de Componente
+* Dentro do diretório do projeto
+ng g c nome-componente
