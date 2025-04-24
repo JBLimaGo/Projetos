@@ -1,6 +1,5 @@
 <section class="property-binding">
-   
-    <!--  
+  <!--  
     <article> 
         <h3> Interpolation / Interpolação </h3>
         <p> String renderizada com Interpolação: {{ url }} </p>
@@ -14,7 +13,7 @@
         <img [src]="urlImagem"> 
 
     </article>
--->
+
     <article>
         <h3> Class e Style Binding </h3>
     
@@ -43,9 +42,25 @@
         </div>          
     
     </article>
-  
+  -->
 
+  <article>
+    <h3>Event Binding</h3>
+    <div>
+      <button (click)="botaoClicado()" class="btn btn-primary">
+        Me Clique
+      </button>
+      <br /><br />
+      <input
+        type="text"
+        (keyup)="onkeyUp($event)"
+        (keyup.enter)="salvarValor(campoInput.value)"
+        (blur)="salvarValor(campoInput.value)"
+        #campoInput
+      />
 
-
-
+      <p>Valor digitado: {{ valorAtual }}</p>
+      <p>Valor salvo: {{ valorSalvo }}</p>
+    </div>
+  </article>
 </section>
