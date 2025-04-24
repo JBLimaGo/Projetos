@@ -5,11 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CursoModule } from './curso/curso.module';
 import { GavetaNavComponent } from './gaveta-nav/gaveta-nav.component';
+import { DataBindingComponent } from './data-binding/data-binding.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    GavetaNavComponent
+    GavetaNavComponent,
+    DataBindingComponent
   ],
   imports: [
     BrowserModule,

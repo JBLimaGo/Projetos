@@ -39,6 +39,12 @@ após pesquisar em alguns forúms,
 oque resolveu para mim foi criar o projeto dessa 
 forma: ng new my-app --no-standalone --routing --ssr=false
 
+-------------------------------------------------------------------------------------------------
+
+Apos baixar o projeto do diretorio rodar o comando para atualizar o node_modules
+
+npm install
+
 --------------------------------------------------------------------------------------------------
 
 Criação de Modulos @Ngmodule
@@ -50,3 +56,5 @@ ng g m nome-modulo
 Criação de Componente
 * Dentro do diretório do projeto
 ng g c nome-componente
+
+

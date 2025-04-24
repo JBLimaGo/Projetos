@@ -13,3 +13,17 @@
   .sidebar a:hover {
     background-color: #575757; /* Cor de fundo ao passar o mouse */
   }
+  
+  .sidebar.closed {
+    width: 0;
+    overflow: hidden;
+  }
+  
+  .main-content {
+    margin-left: 250px;
+    transition: margin-left 0.3s;
+  }
+  
+  .main-content.closed {
+    margin-left: 0;
+  }
