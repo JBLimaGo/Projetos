@@ -7,8 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   //title = 'projeto-modulos';
-  valor: number = 5;
-  deletarCiclo: boolean = false;
+  valor = 5;
+  deletarCiclo = false;
   mudarValor() {
     this.valor++;
   }

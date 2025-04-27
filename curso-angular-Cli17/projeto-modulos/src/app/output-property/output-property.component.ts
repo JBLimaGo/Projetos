@@ -1,19 +1,14 @@
-import { Component, Input, OnInit, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
-  selector: 'contador',
+  selector: 'app-contador',
   templateUrl: './output-property.component.html',
   styleUrls: ['./output-property.component.css']
 })
-export class OutputPropertyComponent implements OnInit {
-  @Input() valor: number = 0;
+export class OutputPropertyComponent {
+  @Input() valor = 0;
   @Output() mudouValor = new EventEmitter();
   @ViewChild('campoInput', { static: false }) campoValorInput!: ElementRef;
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
   incrementarContador() {
     this.campoValorInput.nativeElement.value++;  

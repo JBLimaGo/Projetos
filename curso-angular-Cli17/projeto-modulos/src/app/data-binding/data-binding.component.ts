@@ -1,25 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-data-binding',
   templateUrl: './data-binding.component.html',
-  styleUrl: './data-binding.component.css',
+  styleUrls: ['./data-binding.component.css'], // Corrigido o nome da propriedade de estilo
 })
-export class DataBindingComponent implements OnInit {
-  url: string = 'http://gmail.com';
+export class DataBindingComponent {
+  url = 'http://gmail.com'; // Removida a anotação de tipo redundante
 
-  valorAtual: string = '';
-  valorSalvo: string = '';
-  isMouseOver: boolean = false; 
-  nome: string = '';
-  nomeCurso: string = 'Angular'; // Inicializa a variável nomeCurso com o valor 'Angular'
+  valorAtual = ''; // Removida a anotação de tipo redundante
+  valorSalvo = ''; // Removida a anotação de tipo redundante
+  isMouseOver = false; // Removida a anotação de tipo redundante
+  nome = ''; // Removida a anotação de tipo redundante
+  nomeCurso = 'Angular'; // Removida a anotação de tipo redundante
 
-  pessoa: any = {
-    nome: 'João', 
+  pessoa = {
+    nome: 'João',
     idade: 20,
     profissao: 'Programador',
-  };
-    
+  }; // Substituído `any` por um objeto literal
 
   urlImagem =
     'https://fastly.picsum.photos/id/296/200/300.jpg?hmac=3w6L7NcSbkDRHC36vvfj4JuF0yOHmTjqQS5F9biJyKA';
@@ -33,19 +32,15 @@ export class DataBindingComponent implements OnInit {
   }
 
   onkeyUp(event: KeyboardEvent) {
-    this.valorAtual = (<HTMLInputElement>event.target).value;
+    this.valorAtual = (event.target as HTMLInputElement).value; // Substituído `<HTMLInputElement>` por `as HTMLInputElement`
   }
-
-  constructor() {}
 
   salvarValor(valor: string) {
     this.valorSalvo = valor; // Atualiza o valor atual com o valor recebido
   }
 
-  onMudouValor(evento: any) {
+  onMudouValor(evento: { novoValor: number }) {
+    // Substituído `any` por um tipo mais específico
     console.log(evento.novoValor);
-  
   }
-
-  ngOnInit() {}
 }

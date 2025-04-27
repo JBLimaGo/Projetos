@@ -1,55 +1,54 @@
 import { Component, OnInit, 
-         OnChanges, DoCheck, 
-         AfterContentInit, AfterContentChecked, 
-         AfterViewInit, AfterViewChecked, 
-         OnDestroy, Input } from '@angular/core';
+  OnChanges, DoCheck, 
+  AfterContentInit, AfterContentChecked, 
+  AfterViewInit, AfterViewChecked, 
+  OnDestroy, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-ciclo',
-  templateUrl: './ciclo.component.html',
-  styleUrl: './ciclo.component.css'
+selector: 'app-ciclo',
+templateUrl: './ciclo.component.html',
+styleUrls: ['./ciclo.component.css'] // Corrigido o nome da propriedade de estilo
 })
 export class CicloComponent implements OnInit, OnChanges, DoCheck, 
-                                       AfterContentInit, AfterContentChecked, 
-                                       AfterViewInit, AfterViewChecked, OnDestroy {
+                                AfterContentInit, AfterContentChecked, 
+                                AfterViewInit, AfterViewChecked, OnDestroy {
 
-                                       @Input() valorInicial: number = 10;
-                                        valorMudou: boolean = false;
-  constructor() { 
-    console.log('constructor - CicloComponent');
-  }
+@Input() valorInicial = 10; // Removida a anotação de tipo redundante
+valorMudou = false; // Removida a anotação de tipo redundante
 
-  ngOnInit(): void {
-    console.log('ngOnInit - CicloComponent');
-  }
+constructor() { 
+console.log('constructor - CicloComponent');
+}
 
-  ngOnChanges() {
-    console.log('ngOnChanges - CicloComponent');
-  }
+ngOnInit(): void {
+console.log('ngOnInit - CicloComponent');
+}
 
-  ngDoCheck() {
-    console.log('ngDoCheck - CicloComponent');
-  }
+ngOnChanges() {
+console.log('ngOnChanges - CicloComponent');
+}
 
-  ngAfterContentInit() {
-    console.log('ngAfterContentInit - CicloComponent');
-  }
+ngDoCheck() {
+console.log('ngDoCheck - CicloComponent');
+}
 
-  ngAfterContentChecked() {
-    console.log('ngAfterContentChecked - CicloComponent');
-  }
+ngAfterContentInit() {
+console.log('ngAfterContentInit - CicloComponent');
+}
 
-  ngAfterViewInit() {
-    console.log('ngAfterViewInit - CicloComponent');
-  }
+ngAfterContentChecked() {
+console.log('ngAfterContentChecked - CicloComponent');
+}
 
-  ngAfterViewChecked() {
-    console.log('ngAfterViewChecked - CicloComponent');
-  }
+ngAfterViewInit() {
+console.log('ngAfterViewInit - CicloComponent');
+}
 
-  ngOnDestroy() {
-    console.log('ngOnDestroy - CicloComponent');
-  }
-  
+ngAfterViewChecked() {
+console.log('ngAfterViewChecked - CicloComponent');
+}
 
+ngOnDestroy() {
+console.log('ngOnDestroy - CicloComponent');
+}
 }
