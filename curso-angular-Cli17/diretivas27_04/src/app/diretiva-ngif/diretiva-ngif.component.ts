@@ -1,22 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-diretiva-ngif',
   standalone: true,
   imports: [],
   templateUrl: './diretiva-ngif.component.html',
-  styleUrl: './diretiva-ngif.component.css'
+  styleUrls: ['./diretiva-ngif.component.css'] // Corrigido: styleUrl -> styleUrls
 })
-export class DiretivaNgifComponent implements OnInit {
-  cursos: string[] = ['Angular', 'React', 'Vue'];
-  mostrarCursos: boolean = false;
+export class DiretivaNgifComponent {
+  cursos: string[] = ['Angular', 'React', 'Vue']; // Lista de cursos inicializada
+  mostrarCursos = false; // Tipo inferido automaticamente pelo TypeScript
 
-  constructor() {}
-
-  ngOnInit(): void {}
-
-  onMostrarCursos() {
-    this.mostrarCursos = !this.mostrarCursos;
+  /**
+   * Alterna a visibilidade da lista de cursos.
+   */
+  onMostrarCursos(): void {
+    this.mostrarCursos = !this.mostrarCursos; // Inverte o valor de mostrarCursos
   }
-
 }
