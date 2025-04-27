@@ -10,6 +10,16 @@ export class DataBindingComponent implements OnInit {
 
   valorAtual: string = '';
   valorSalvo: string = '';
+  isMouseOver: boolean = false; 
+  nome: string = '';
+  nomeCurso: string = 'Angular'; // Inicializa a variável nomeCurso com o valor 'Angular'
+
+  pessoa: any = {
+    nome: 'João', 
+    idade: 20,
+    profissao: 'Programador',
+  };
+    
 
   urlImagem =
     'https://fastly.picsum.photos/id/296/200/300.jpg?hmac=3w6L7NcSbkDRHC36vvfj4JuF0yOHmTjqQS5F9biJyKA';
@@ -30,6 +40,11 @@ export class DataBindingComponent implements OnInit {
 
   salvarValor(valor: string) {
     this.valorSalvo = valor; // Atualiza o valor atual com o valor recebido
+  }
+
+  onMudouValor(evento: any) {
+    console.log(evento.novoValor);
+  
   }
 
   ngOnInit() {}

@@ -1,5 +1,5 @@
-<section class="property-binding">
-  <!--  
+ <!-- <section class="property-binding">
+  
     <article> 
         <h3> Interpolation / Interpolação </h3>
         <p> String renderizada com Interpolação: {{ url }} </p>
@@ -43,6 +43,7 @@
     
     </article>
   -->
+  <!-- <section class = "two-way-binding">
 
   <article>
     <h3>Event Binding</h3>
@@ -61,6 +62,32 @@
 
       <p>Valor digitado: {{ valorAtual }}</p>
       <p>Valor salvo: {{ valorSalvo }}</p>
-    </div>
-  </article>
+    </div> -->
+    <!-- <h3>Two-way data binding</h3>
+    <div>
+        <p>Meu Nome é: {{ pessoa.nome }} e tenho {{ pessoa.idade }} anos de idade e minha profissão é: {{pessoa.profissao}}</p>
+                
+        <input type="text" 
+        [(ngModel)]="pessoa.nome">
+
+        <input type="text" 
+        [(ngModel)]="pessoa.idade">
+ 
+        <input type="text" 
+        [(ngModel)]="pessoa.profissao">
+
+        <p>Você digitou: {{ nome }}</p>
+    </div> -->
+
+<section class="input-output-properties">
+        <article>
+            <h3>Input/Output Properties</h3>           
+            <div>
+
+                <app-curso-input [nome]="nomeCurso"></app-curso-input>
+                <contador [valor]="10"
+                (mudouValor)="onMudouValor($event)"
+                ></contador>
+            </div>
+         </article>
 </section>
