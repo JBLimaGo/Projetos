@@ -1,9 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-diretiva-ngif',
   standalone: true,
-  imports: [],
+  imports: [CommonModule], // Adicionado CommonModule aqui
   templateUrl: './diretiva-ngif.component.html',
   styleUrls: ['./diretiva-ngif.component.css'] // Corrigido: styleUrl -> styleUrls
 })
