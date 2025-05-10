@@ -9,11 +9,14 @@ export class CursosService {
   }
 
   getCursos(): string[] {
-    return ['Angular 2', 'JavaScript', 'Java'];//this.cursos;
+    return this.cursos;
+    //return ['Angular 2', 'JavaScript', 'Java'];//this.cursos;
   }
 
   addCurso(curso: string): void {
-    this.cursos.push(curso);
+    if (curso.trim()) { // Verifica se o curso não está vazio
+      this.cursos.push(curso);
+    }
   }
 
   getCurso(index: number): string {

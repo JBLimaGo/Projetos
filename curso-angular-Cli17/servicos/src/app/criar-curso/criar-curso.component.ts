@@ -23,4 +23,9 @@ export class CriarCursoComponent {
     this.cursos = this.cursosService.getCursos();
   }
 
+  onAddCurso(curso: string): void {
+    this.cursosService.addCurso(curso);
+    this.cursos = this.cursosService.getCursos();
+  }
+
 }
