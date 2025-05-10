@@ -21,6 +21,11 @@ export class CursosComponent {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.cursos = this.cursosService.getCursos();
+    CursosService.criouNovoCurso.subscribe(
+      (curso: string) => {
+        this.cursos.push(curso);
+      }
+    );
   }
 
 }
