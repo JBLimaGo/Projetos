@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { FiltroArrayPipe } from '../filtro-array.pipe'; // Importe o pipe standalone
 import { interval } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+
+
 @Component({
   selector: 'app-exemplos-pipes',
-  standalone: false,
   templateUrl: './exemplos-pipes.component.html',
-  styleUrl: './exemplos-pipes.component.css'
+  styleUrls: ['./exemplos-pipes.component.css'],
+  standalone: true, // Torne o componente standalone
+  imports: [FiltroArrayPipe] // Adicione o pipe standalone aqui
 })
 export class ExemplosPipesComponent {
 
@@ -31,12 +35,9 @@ export class ExemplosPipesComponent {
   valorAsync2 = interval(2000)
   .pipe(
     map(valor => 'Valor assíncrono 2')
-  );
-
- 
+  ); 
 
   obterCursos() {
-
  
   }
 

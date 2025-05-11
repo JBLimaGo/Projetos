@@ -9,3 +9,8 @@
 <br>
 <p>Livro: {{ livro | json }}</p>
 
+<ul>
+    <li *ngFor="let autor of livros | filtroArray">
+        {{ autor }}
+    </li>
+</ul>

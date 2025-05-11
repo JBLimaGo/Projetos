@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ExemplosPipesComponent } from './exemplos-pipes/exemplos-pipes.component';
 import { CamelCasePipe } from './camel-case.pipe';
+import { FiltroArrayPipe } from './filtro-array.pipe';
 
 // Importa e registra o locale pt-BR
 import { registerLocaleData } from '@angular/common';
