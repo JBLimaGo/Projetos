@@ -5,12 +5,15 @@
       <ul id="nav-mobile" class="left hide-on-med-and-down">
         <li routerLinkActive="active"><a routerLink="/login">Login</a></li>
         <li routerLinkActive="active"><a routerLink="/cursos">Cursos</a></li>
+        <li routerLinkActive="active"><a [routerLink]="['curso',idCurso.value]">Cursos com ID</a></li>
         <li routerLinkActive="active"><a>JavaScript</a></li>
       </ul>
     </div>
 </nav>
 
 <div class="container">
+    <p>Entre com o Id do Curso</p>
+    <input #idCurso>
   <h1>Rotas</h1>
   <p>Aprendendo a usar rotas no Angular</p>
 
