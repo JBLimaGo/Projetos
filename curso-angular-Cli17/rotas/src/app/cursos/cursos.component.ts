@@ -7,43 +7,35 @@ import { CursosService } from './cursos.service';
 @Component({
   selector: 'app-cursos',
   templateUrl: './cursos.component.html',
-  styleUrls: ['./cursos.component.css']
+  styleUrls: ['./cursos.component.css'],
 })
 export class CursosComponent implements OnInit {
   cursos: any[] = [];
-  pagina: number = 0;
+  pagina: number = 1;
   inscricao: Subscription = new Subscription();
 
-  constructor(private cursosService: CursosService,
-              private router : ActivatedRoute,
-              private route : Router 
-            ) {
-    // this.cursos = this.cursosService.getCursos();
-    // this.cursos = ['Angular', 'Java', 'React'];
+  constructor(
+    private cursosService: CursosService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
+
+  ngOnInit() {
+    this.cursos = this.cursosService.getCursos();
+
+    this.inscricao = this.route.queryParams.subscribe((queryParams: any) => {
+      this.pagina = queryParams['pagina'];
+    });
   }
 
-  ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    this.cursos = this.cursosService.gtCursos();
-    this.inscricao =  this.router.params.subscribe(
-      (params: any) => { 
-        this.pagina = +params['pagina'] || 0;
-      }
-      // this.cursos = ['Angular', 'Java', 'React'];
-    );
-  }
-
-  ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
+  ngOnDestroy() {
     this.inscricao.unsubscribe();
   }
 
-  proximaPagina(): void {
-   // this.pagina++;
-    this.route.navigate(['/cursos'], 
-      {queryParams: {'pagina': ++this.pagina}});
+  proximaPagina() {
+    //this.pagina++;
+    this.router.navigate(['/cursos'], {
+      queryParams: { pagina: ++this.pagina },
+    });
   }
-
 }
