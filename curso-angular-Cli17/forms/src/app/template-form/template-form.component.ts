@@ -1,3 +1,4 @@
+import { Usuario } from './../../../../rotas/src/app/login/usuario';
 import { Component } from '@angular/core';
 
 @Component({
@@ -6,11 +7,16 @@ import { Component } from '@angular/core';
   styleUrl: './template-form.component.css',
 })
 export class TemplateFormComponent {
-  constructor() {}
+  usuario: any = {
+    nome: 'Jefferson',
+    email: 'jefferson.b.lima@gmail.com',
+  };
 
   onSubmit(form: any) {
     console.log(form);
   }
+
+  constructor() {}
 
   ngOnInit(): void {}
 }
