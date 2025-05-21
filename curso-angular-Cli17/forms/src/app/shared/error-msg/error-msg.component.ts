@@ -12,8 +12,8 @@ export class ErrorMsgComponent implements OnInit {
   // @Input() msgErro: string;
   // @Input() mostrarErro: boolean;
 
-  @Input() control: FormControl;
-  @Input() label: string;
+  @Input() control: FormControl = new FormControl('');
+  @Input() label: string = '';
 
   constructor() { }
 

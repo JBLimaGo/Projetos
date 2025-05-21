@@ -1,24 +1,27 @@
-import { NgModule } from '@angular/core';
+import { DataFormModule } from './data-form/data-form.module';
+import { TemplateFormModule } from './template-form/template-form.module';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TemplateFormModule } from './template-form/template-form.module';
-import { SharedModule } from './shared/shared.module';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent
+  ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
     FormsModule,
-    SharedModule,
-    TemplateFormModule,
+    ReactiveFormsModule,
+    HttpClientModule,
     AppRoutingModule,
+    TemplateFormModule,
+    DataFormModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

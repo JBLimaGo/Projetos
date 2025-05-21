@@ -54,8 +54,8 @@ export class FormValidations {
     return validator;
   }
 
-  static getErrorMsg(fieldName: string, validatorName: string, validatorValue?: any) {
-    const config = {
+  static getErrorMsg(fieldName: string, validatorName: string, validatorValue?: any): string {
+    const config: { [key: string]: string } = {
       'required': `${fieldName} é obrigatório.`,
       'minlength': `${fieldName} precisa ter no mínimo ${validatorValue.requiredLength} caracteres.`,
       'maxlength': `${fieldName} precisa ter no máximo ${validatorValue.requiredLength} caracteres.`,
@@ -65,6 +65,6 @@ export class FormValidations {
       'pattern': 'Campo inválido'
     };
 
-    return config[validatorName];
+    return config[validatorName] || 'Campo inválido.';
   }
 }

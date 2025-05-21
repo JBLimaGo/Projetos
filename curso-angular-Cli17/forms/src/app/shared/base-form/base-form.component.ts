@@ -3,15 +3,13 @@ import { FormGroup, FormArray } from '@angular/forms';
 
 @Directive()
 export abstract class BaseFormComponent implements OnInit {
+  formulario!: FormGroup;
 
-  formulario: FormGroup;
+  constructor() {}
 
-  constructor() { }
+  ngOnInit() {}
 
-  ngOnInit() {
-  }
-
-  abstract submit();
+  abstract submit(): void;
 
   onSubmit() {
     if (this.formulario.valid) {
@@ -22,10 +20,11 @@ export abstract class BaseFormComponent implements OnInit {
     }
   }
 
-  verificaValidacoesForm(formGroup: FormGroup | FormArray) {
-    Object.keys(formGroup.controls).forEach(campo => {
-      console.log(campo);
+  verificaValidacoesForm(formGroup: FormGroup | FormArray): void {
+    Object.keys(formGroup.controls).forEach((campo) => {
       const controle = formGroup.get(campo);
+      if (!controle) return;
+
       controle.markAsDirty();
       controle.markAsTouched();
       if (controle instanceof FormGroup || controle instanceof FormArray) {
@@ -38,33 +37,32 @@ export abstract class BaseFormComponent implements OnInit {
     this.formulario.reset();
   }
 
-  verificaValidTouched(campo: string) {
-    return (
-      !this.formulario.get(campo).valid &&
-      (this.formulario.get(campo).touched || this.formulario.get(campo).dirty)
-    );
+  verificaValidTouched(campo: string): boolean {
+    const control = this.formulario.get(campo);
+    if (!control) return false;
+
+    return !control.valid && (control.touched || control.dirty);
   }
 
-  verificaRequired(campo: string) {
-    return (
-      this.formulario.get(campo).hasError('required') &&
-      (this.formulario.get(campo).touched || this.formulario.get(campo).dirty)
-    );
+  verificaRequired(campo: string): boolean {
+    const control = this.formulario.get(campo);
+    if (!control) return false;
+
+    return control.hasError('required') && (control.touched || control.dirty);
   }
 
-  verificaEmailInvalido() {
+  verificaEmailInvalido(): boolean {
     const campoEmail = this.formulario.get('email');
-    if (campoEmail.errors) {
+    if (campoEmail && campoEmail.errors) {
       return campoEmail.errors['email'] && campoEmail.touched;
     }
+    return false;
   }
 
   aplicaCssErro(campo: string) {
     return {
       'has-error': this.verificaValidTouched(campo),
-      'has-feedback': this.verificaValidTouched(campo)
+      'has-feedback': this.verificaValidTouched(campo),
     };
   }
-
-
 }
