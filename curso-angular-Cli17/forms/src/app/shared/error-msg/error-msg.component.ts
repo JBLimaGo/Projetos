@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { AbstractControl, FormControl } from '@angular/forms';
 import { FormValidations } from '../form-validations';
 
 @Component({
@@ -12,7 +12,7 @@ export class ErrorMsgComponent implements OnInit {
   // @Input() msgErro: string;
   // @Input() mostrarErro: boolean;
 
-  @Input() control: FormControl = new FormControl('');
+  @Input() control: AbstractControl | null = null;
   @Input() label: string = '';
 
   constructor() { }
@@ -21,15 +21,23 @@ export class ErrorMsgComponent implements OnInit {
   }
 
   get errorMessage() {
+    if (!this.control || !this.control.errors) {
+      return null;
+    }
 
     for (const propertyName in this.control.errors) {
-      if (this.control.errors.hasOwnProperty(propertyName) &&
-        this.control.touched) {
-          return FormValidations.getErrorMsg(this.label, propertyName, this.control.errors[propertyName]);
-        }
+      if (
+        this.control.errors.hasOwnProperty(propertyName) &&
+        this.control.touched
+      ) {
+        return FormValidations.getErrorMsg(
+          this.label,
+          propertyName,
+          this.control.errors[propertyName]
+        );
+      }
     }
 
     return null;
   }
-
 }

@@ -9,9 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -19,9 +17,9 @@ import { AppComponent } from './app.component';
     HttpClientModule,
     AppRoutingModule,
     TemplateFormModule,
-    DataFormModule
+    DataFormModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

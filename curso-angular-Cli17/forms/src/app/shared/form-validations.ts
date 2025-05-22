@@ -1,30 +1,29 @@
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import {
+  FormArray,
+  FormControl,
+  FormGroup,
+  AbstractControl,
+  ValidatorFn,
+} from '@angular/forms';
 
 export class FormValidations {
-
-  static requiredMinCheckbox(min = 1) {
-    const validator = (formArray: FormArray) => {
-      /* const values = formArray.controls;
-      let totalChecked = 0;
-      for (let i = 0; i < values.length; i++) {
-        if (values[i].value) {
-          totalChecked += 1;
-        }
-      } */
-      const totalChecked = formArray.controls
-        .map(v => v.value)
-        .reduce((total, current) => current ? total + current : total, 0);
-      return totalChecked >= min ? null : { required: true };
+  static requiredMinCheckbox(min: number): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      if (control instanceof FormArray) {
+        const totalChecked = control.controls
+          .map((v) => v.value)
+          .reduce((total, current) => (current ? total + 1 : total), 0);
+        return totalChecked >= min ? null : { required: true };
+      }
+      return null;
     };
-    return validator;
   }
 
   static cepValidator(control: FormControl) {
-
     const cep = control.value;
     if (cep && cep !== '') {
       const validacep = /^[0-9]{8}$/;
-      return validacep.test(cep) ? null : { cepInvalido : true };
+      return validacep.test(cep) ? null : { cepInvalido: true };
     }
     return null;
   }
@@ -46,7 +45,7 @@ export class FormValidations {
       }
 
       if (field.value !== formControl.value) {
-        return { equalsTo : otherField };
+        return { equalsTo: otherField };
       }
 
       return null;
@@ -54,15 +53,19 @@ export class FormValidations {
     return validator;
   }
 
-  static getErrorMsg(fieldName: string, validatorName: string, validatorValue?: any): string {
+  static getErrorMsg(
+    fieldName: string,
+    validatorName: string,
+    validatorValue?: any
+  ): string {
     const config: { [key: string]: string } = {
-      'required': `${fieldName} é obrigatório.`,
-      'minlength': `${fieldName} precisa ter no mínimo ${validatorValue.requiredLength} caracteres.`,
-      'maxlength': `${fieldName} precisa ter no máximo ${validatorValue.requiredLength} caracteres.`,
-      'cepInvalido': 'CEP inválido.',
-      'emailInvalido': 'Email já cadastrado!',
-      'equalsTo': 'Campos não são iguais',
-      'pattern': 'Campo inválido'
+      required: `${fieldName} é obrigatório.`,
+      minlength: `${fieldName} precisa ter no mínimo ${validatorValue.requiredLength} caracteres.`,
+      maxlength: `${fieldName} precisa ter no máximo ${validatorValue.requiredLength} caracteres.`,
+      cepInvalido: 'CEP inválido.',
+      emailInvalido: 'Email já cadastrado!',
+      equalsTo: 'Campos não são iguais',
+      pattern: 'Campo inválido',
     };
 
     return config[validatorName] || 'Campo inválido.';

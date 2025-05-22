@@ -1,32 +1,48 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
+import {
+  FormBuilder,
+  Validators,
+  FormControl,
+  FormArray,
+  FormGroup,
+} from '@angular/forms';
+import { EMPTY } from 'rxjs';
+import {
+  map,
+  tap,
+  distinctUntilChanged,
+  switchMap,
+  filter,
+} from 'rxjs/operators';
 import { EstadoBr } from './../shared/models/estado-br.model';
 import { DropdownService } from './../shared/services/dropdown.service';
 import { ConsultaCepService } from '../shared/services/consulta-cep.service';
-import { Observable, empty } from 'rxjs';
 import { FormValidations } from '../shared/form-validations';
 import { VerificaEmailService } from './services/verifica-email.service';
-import { map, tap, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { BaseFormComponent } from '../shared/base-form/base-form.component';
 import { Cidade } from '../shared/models/cidade';
+
+interface Cargo {
+  nome: string;
+  nivel: string;
+  desc: string;
+}
 
 @Component({
   selector: 'app-data-form',
   templateUrl: './data-form.component.html',
-  styleUrls: ['./data-form.component.css']
+  styleUrls: ['./data-form.component.css'],
 })
 export class DataFormComponent extends BaseFormComponent implements OnInit {
-
-  // formulario: FormGroup;
-  estados: EstadoBr[];
-  cidades: Cidade[];
-  // estados: Observable<EstadoBr[]>;
-  cargos: any[];
-  tecnologias: any[];
-  newsletterOp: any[];
-
   frameworks = ['Angular', 'React', 'Vue', 'Sencha'];
+  override formulario!: FormGroup;
+
+  estados: EstadoBr[] = [];
+  cidades: Cidade[] = [];
+  cargos: any[] = [];
+  tecnologias: any[] = [];
+  newsletterOp: any[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -36,39 +52,32 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
     private verificaEmailService: VerificaEmailService
   ) {
     super();
-   }
+  }
 
-  ngOnInit() {
-
-    // this.verificaEmailService.verificarEmail('email@email.com').subscribe();
-
-    // this.estados = this.dropdownService.getEstadosBr();
-    this.dropdownService.getEstadosBr()
-      .subscribe(dados => this.estados = dados);
+  override ngOnInit() {
+    this.dropdownService
+      .getEstadosBr()
+      .subscribe((dados) => (this.estados = dados));
 
     this.cargos = this.dropdownService.getCargos();
     this.tecnologias = this.dropdownService.getTecnologias();
     this.newsletterOp = this.dropdownService.getNewsletter();
 
-    /*this.dropdownService.getEstadosBr().subscribe(dados => {
-      this.estados = dados;
-      console.log(dados);
-    });*/
-
-    /*this.formulario = new FormGroup({
-      nome: new FormControl(null),
-      email: new FormControl(null),
-
-      endereco: new FormGroup({
-        cep: new FormControl(null)
-      })
-    });*/
-
     this.formulario = this.formBuilder.group({
-      nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
-      email: [null, [Validators.required, Validators.email], [this.validarEmail.bind(this)]],
+      nome: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(35),
+        ],
+      ],
+      email: [
+        null,
+        [Validators.required, Validators.email],
+        [this.validarEmail.bind(this)],
+      ],
       confirmarEmail: [null, [FormValidations.equalsTo('email')]],
-
       endereco: this.formBuilder.group({
         cep: [null, [Validators.required, FormValidations.cepValidator]],
         numero: [null, Validators.required],
@@ -76,107 +85,96 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
         rua: [null, Validators.required],
         bairro: [null, Validators.required],
         cidade: [null, Validators.required],
-        estado: [null, Validators.required]
+        estado: [null, Validators.required],
       }),
-
       cargo: [null],
       tecnologias: [null],
       newsletter: ['s'],
       termos: [null, Validators.pattern('true')],
-      frameworks: this.buildFrameworks()
+      frameworks: this.buildFrameworks(),
     });
 
-    this.formulario.get('endereco.cep').statusChanges
-      .pipe(
+    // Monitora mudanças no CEP
+    this.formulario
+      .get('endereco.cep')
+      ?.statusChanges.pipe(
         distinctUntilChanged(),
-        tap(value => console.log('status CEP:', value)),
-        switchMap(status => status === 'VALID' ?
-          this.cepService.consultaCEP(this.formulario.get('endereco.cep').value)
-          : empty()
+        tap((value) => console.log('status CEP:', value)),
+        switchMap((status) =>
+          status === 'VALID'
+            ? this.cepService.consultaCEP(
+                this.formulario.get('endereco.cep')?.value
+              )
+            : EMPTY
         )
       )
-      .subscribe(dados => dados ? this.populaDadosForm(dados) : {});
+      .subscribe((dados) => (dados ? this.populaDadosForm(dados) : {}));
 
-      this.formulario.get('endereco.estado').valueChanges
-        .pipe(
-          tap(estado => console.log('Novo estado: ', estado)),
-          map(estado => this.estados.filter(e => e.sigla === estado)),
-          map(estados => estados && estados.length > 0 ? estados[0].id : empty()),
-          switchMap((estadoId: number) => this.dropdownService.getCidades(estadoId)),
-          tap(console.log)
-        )
-        .subscribe(cidades => this.cidades = cidades);
-
-      // this.dropdownService.getCidades(8).subscribe(console.log);
-
-    // tslint:disable-next-line:max-line-length
-    // Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-    // [Validators.required, Validators.minLength(3), Validators.maxLength(20)]
+    // Monitora mudanças no estado
+    this.formulario
+      .get('endereco.estado')
+      ?.valueChanges.pipe(
+        tap((estado) => console.log('Novo estado: ', estado)),
+        map((estado) => this.estados.filter((e) => e.sigla === estado)),
+        map((estados) => (estados && estados.length > 0 ? estados[0].id : 0)),
+        filter((estadoId) => estadoId > 0), // Filtra valores inválidos
+        switchMap((estadoId: number) =>
+          this.dropdownService.getCidades(estadoId)
+        ),
+        tap(console.log)
+      )
+      .subscribe((cidades) => (this.cidades = cidades));
   }
 
   buildFrameworks() {
-    const values = this.frameworks.map(v => new FormControl(false));
-    return this.formBuilder.array(values, FormValidations.requiredMinCheckbox(1));
-    /* this.formBuilder.array( [
-      new FormControl(false), // angular
-      new FormControl(false), // react
-      new FormControl(false), // vue
-      new FormControl(false) // sencha
-    ]); */
+    const values = this.frameworks.map((v) => new FormControl(false));
+    return this.formBuilder.array(values, [
+      FormValidations.requiredMinCheckbox(1),
+    ]);
   }
 
   submit() {
-    console.log(this.formulario);
+    if (this.formulario.valid) {
+      let valueSubmit = Object.assign({}, this.formulario.value);
 
-    let valueSubmit = Object.assign({}, this.formulario.value);
+      valueSubmit = Object.assign(valueSubmit, {
+        frameworks: valueSubmit.frameworks
+          .map((v: boolean, i: number) => (v ? this.frameworks[i] : null))
+          .filter((v: string | null) => v !== null),
+      });
 
-    valueSubmit = Object.assign(valueSubmit, {
-      frameworks: valueSubmit.frameworks
-      .map((v, i) => v ? this.frameworks[i] : null)
-      .filter(v => v !== null)
-    });
-
-    console.log(valueSubmit);
-
-    this.http
-        .post('https://httpbin.org/post', JSON.stringify({}))
+      this.http
+        .post('https://httpbin.org/post', JSON.stringify(valueSubmit))
         .subscribe(
-          dados => {
+          (dados) => {
             console.log(dados);
-            // reseta o form
             // this.formulario.reset();
-            // this.resetar();
           },
           (error: any) => alert('erro')
         );
-  }
-
-  consultaCEP() {
-    const cep = this.formulario.get('endereco.cep').value;
-
-    if (cep != null && cep !== '') {
-      this.cepService.consultaCEP(cep)
-      .subscribe(dados => this.populaDadosForm(dados));
     }
   }
 
-  populaDadosForm(dados) {
-    // this.formulario.setValue({});
+  consultaCEP() {
+    const cep = this.formulario.get('endereco.cep')?.value;
 
+    if (cep != null && cep !== '') {
+      this.cepService
+        .consultaCEP(cep)
+        .subscribe((dados) => this.populaDadosForm(dados));
+    }
+  }
+
+  populaDadosForm(dados: any) {
     this.formulario.patchValue({
       endereco: {
         rua: dados.logradouro,
-        // cep: dados.cep,
         complemento: dados.complemento,
         bairro: dados.bairro,
         cidade: dados.localidade,
-        estado: dados.uf
-      }
+        estado: dados.uf,
+      },
     });
-
-    this.formulario.get('nome').setValue('Loiane');
-
-    // console.log(form);
   }
 
   resetaDadosForm() {
@@ -186,30 +184,54 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
         complemento: null,
         bairro: null,
         cidade: null,
-        estado: null
-      }
+        estado: null,
+      },
     });
   }
 
   setarCargo() {
-    const cargo = { nome: 'Dev', nivel: 'Pleno', desc: 'Dev Pl' };
-    this.formulario.get('cargo').setValue(cargo);
+    const cargo: Cargo = { nome: 'Dev', nivel: 'Pleno', desc: 'Dev Pl' };
+    this.formulario.get('cargo')?.setValue(cargo);
   }
 
-  compararCargos(obj1, obj2) {
-    return obj1 && obj2 ? (obj1.nome === obj2.nome && obj1.nivel === obj2.nivel) : obj1 === obj2;
+  compararCargos(obj1: Cargo | null, obj2: Cargo | null): boolean {
+    return obj1 && obj2
+      ? obj1.nome === obj2.nome && obj1.nivel === obj2.nivel
+      : obj1 === obj2;
   }
 
   setarTecnologias() {
-    this.formulario.get('tecnologias').setValue(['java', 'javascript', 'php']);
+    this.formulario.get('tecnologias')?.setValue(['java', 'javascript', 'php']);
   }
 
   validarEmail(formControl: FormControl) {
-    return this.verificaEmailService.verificarEmail(formControl.value)
-      .pipe(map(emailExiste => emailExiste ? { emailInvalido: true } : null));
+    return this.verificaEmailService
+      .verificarEmail(formControl.value)
+      .pipe(
+        map((emailExiste) => (emailExiste ? { emailInvalido: true } : null))
+      );
   }
 
-  getFrameworksControls() {
-    return this.formulario.get('frameworks') ? (<FormArray>this.formulario.get('frameworks')).controls : null;
+  getFrameworksControls(): FormControl[] {
+    const control = this.formulario.get('frameworks');
+    return control instanceof FormArray
+      ? (control.controls as FormControl[])
+      : [];
+  }
+
+  getControl(path: string): FormControl {
+    const control = this.formulario.get(path);
+    if (!control) {
+      throw new Error(`Control ${path} not found`);
+    }
+    return control as FormControl;
+  }
+
+  override aplicaCssErro(campo: string): { 'has-error': boolean; 'has-feedback': boolean } {
+    const control = this.formulario.get(campo);
+    return {
+      'has-error': this.verificaValidTouched(campo),
+      'has-feedback': this.verificaValidTouched(campo)
+    };
   }
 }

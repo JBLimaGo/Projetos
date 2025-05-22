@@ -1,15 +1,15 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, Input } from '@angular/core';
+import { FormGroup, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-form-debug',
   templateUrl: './form-debug.component.html',
   styleUrls: ['./form-debug.component.css'],
 })
-export class FormDebugComponent implements OnInit {
-  @Input() form!: NgForm;
+export class FormDebugComponent {
+  @Input() form!: FormGroup | NgForm;
 
-  constructor() {}
-
-  ngOnInit() {}
+  isNgForm(form: FormGroup | NgForm): form is NgForm {
+    return 'submitted' in form;
+  }
 }
