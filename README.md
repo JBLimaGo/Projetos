@@ -1,4 +1,4 @@
-Projetos realizado para estudos e conhecimento
+Projetos realizado com Angular para estudos e conhecimento
 
 Data Binding
 Angular CLI
